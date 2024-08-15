@@ -8,7 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/articles/{article}', ArticleShow::class);
+Route::get('/articles/{article:slug}', ArticleShow::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
