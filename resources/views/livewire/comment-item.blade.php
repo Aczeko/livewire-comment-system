@@ -1,6 +1,6 @@
 <div
         class="my-6"
-        x-data="{ replying: false }"
+        x-data="{ replying: false, editing: false }"
         x-on:replied.window="replying = false"
 >
 
@@ -15,7 +15,26 @@
             </div>
         </div>
 
-        <div class="mt-4">
+        @can('edit', $comment)
+            <template x-if="editing">
+                <form class="mt-4" wire:submit="edit">
+                    <div>
+                        <x-textarea class="w-full" rows="4" wire:model="editForm.body" />
+                        <x-input-error :messages="$errors->get('editForm.body')"/>
+                    </div>
+                    <div class="flex items-baseline space-x-2">
+                        <x-primary-button class="mt-2">
+                            Edit
+                        </x-primary-button>
+                        <button class="text-gray-500 text-sm" x-on:click="editing = false">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </template>
+        @endcan
+
+        <div class="mt-4" x-show="!editing">
             {{ $comment->body }}
         </div>
 
@@ -25,12 +44,18 @@
                     Reply
                 </button>
             @endcan
+
+            @can('edit', $comment)
+                <button class="text-gray-500" x-on:click="editing = true">
+                    Edit
+                </button>
+            @endcan
         </div>
 
         <template x-if="replying">
                 <form class="mt-4" wire:submit="reply">
                     <div>
-                        <x-textarea placeholder="Post a comment" class="w-full" rows="4" wire:model="replyForm.body" />
+                        <x-textarea placeholder="Reply to {{ $comment->user->name }}" class="w-full" rows="4" wire:model="replyForm.body" />
                         <x-input-error :messages="$errors->get('replyForm.body')"/>
                     </div>
                     <div class="flex items-baseline space-x-2">
