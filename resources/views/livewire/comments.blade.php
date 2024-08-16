@@ -14,4 +14,16 @@
             </x-primary-button>
         </form>
     @endauth
+
+    @if ($comments->count())
+        <div class="mt-8 px-6">
+
+            @foreach($comments as $comment)
+                <div class="border-b border-gray-100 dark:border-gray-700 last:border-b-0">
+                    {{ $comment->body }}
+                </div>
+            @endforeach
+
+        </div>
+    @endif
 </div>
