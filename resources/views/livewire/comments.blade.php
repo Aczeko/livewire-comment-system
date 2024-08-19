@@ -18,7 +18,7 @@
     @if (count($chunks))
         <div class="mt-8 px-6">
             @for($chunk = 0; $chunk < $page; $chunk++)
-                <div class="border-b border-gray-100 last:border-b-0" wire:key="chunk-{{ $chunk }}">
+                <div class="border-b border-gray-100 dark:border-gray-700 last:border-b-0" wire:key="chunk-{{ $chunk }}">
                     <livewire:comment-chunk :ids="$chunks[$chunk]" wire:key="chunk-{{ md5(json_encode($this->chunks[$chunk])) }}" />
                 </div>
             @endfor
