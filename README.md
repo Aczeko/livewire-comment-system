@@ -81,6 +81,7 @@ The Livewire comments component can then be dropped wherever it's needed and the
 
 ## 🔗 Useful Links
 - [Video-Tutorial for this Livewire Comment System](https://codecourse.com/courses/build-a-livewire-comment-system)
+- [Day.js Library](https://github.com/iamkun/dayjs)
 
 </section>
 
