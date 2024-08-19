@@ -86,7 +86,7 @@ To implement this, follow these steps:
    
 Add the following code snippet to your Blade file where you want the comments section to appear:
    
-```
+```html
 <livewire:comments :model="$article" />
 ```
 
