@@ -9,7 +9,7 @@
 
             <div>
                 <div class="flex items-center space-x-2">
-                    <img src="" alt="" class="bg-black rounded-full size-8">
+                    <img src="{{ $comment->user->avatar() }}" alt="{{ $comment->user->name }}" class="bg-black rounded-full size-8">
                     <div class="font-semibold">
                         {{ $comment->user->name }}
                     </div>
