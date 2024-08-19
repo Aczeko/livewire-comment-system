@@ -56,7 +56,7 @@ The Livewire comments component can then be dropped wherever it's needed and the
     php artisan key:generate
     ```
 
-6. Migrate the tables
+6. Migrate the tables and seed the `articles` Table.
 
     ```bash
     php artisan migrate --seed
