@@ -1,6 +1,6 @@
 <div>
     <h1>
-        Comments ({{ $comments->count() }})
+        Comments (implement)
     </h1>
 
     @auth
@@ -15,15 +15,23 @@
         </form>
     @endauth
 
-    @if ($comments->count())
+    @if (count($chunks))
         <div class="mt-8 px-6">
-
-            @foreach($comments as $comment)
-                <div class="border-b border-gray-100 dark:border-gray-700 last:border-b-0" wire:key="{{ $comment->id }}">
-                    <livewire:comment-item :comment="$comment" :key="$comment->id" />
+            @for($chunk = 0; $chunk < $page; $chunk++)
+                <div class="border-b border-gray-100 last:border-b-0" wire:key="chunk-{{ $chunk }}">
+                    <livewire:comment-chunk :ids="$chunks[$chunk]" wire:key="chunk-{{ md5(json_encode($this->chunks[$chunk])) }}" />
                 </div>
-            @endforeach
+            @endfor
+        </div>
+    @endif
 
+    @if($this->hasMorePages())
+        <div class="mt-8 flex items-center justify-center">
+            <x-secondary-button wire:click="loadMore">
+                Load more
+            </x-secondary-button>
         </div>
     @endif
 </div>
+
+
