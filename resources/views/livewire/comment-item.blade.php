@@ -13,7 +13,7 @@
                     <div class="font-semibold">
                         {{ $comment->user->name }}
                     </div>
-                    <div class="text-sm">
+                    <div class="text-sm" x-human-date datetime="{{ $comment->created_at->toDateTimeString() }}">
                         {{ $comment->created_at->diffForHumans() }}
                     </div>
                 </div>
