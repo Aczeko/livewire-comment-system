@@ -37,6 +37,10 @@ class Comments extends Component
 
         $comment->save();
 
+        if (count($this->chunks) === 0) {
+            $this->chunks[] = [];
+        }
+
         array_unshift($this->chunks[0], $comment->id);
     }
 
