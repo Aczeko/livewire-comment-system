@@ -3,7 +3,7 @@
 ## Table of Contents
 - [Overview](#overview)
 - [Installation](#installation)
-- [Usage](#usage)
+- [Implementation](#implementation)
 - [Useful Links](#useful-links)
 
 ---
@@ -46,7 +46,7 @@ The Livewire comments component can then be dropped wherever it's needed and the
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
-    DB_DATABASE=livewire-comment-system
+    DB_DATABASE=livewire_comment_system
     DB_USERNAME=root
     DB_PASSWORD=
     ```
@@ -59,7 +59,7 @@ The Livewire comments component can then be dropped wherever it's needed and the
 6. Migrate the tables
 
     ```bash
-    php artisan migrate
+    php artisan migrate --seed
     ```
 
 7. Run your build process with:
@@ -67,13 +67,59 @@ The Livewire comments component can then be dropped wherever it's needed and the
     npm run dev
     ```
 
+Since you've migrated and seeded the database with an article, you can take a look at it with `/articles/an-article`.
+There you can see the comment section, and unless you are logged-in, you won't be able to post a comment.
+
+Once you're logged in, you can create, edit or delete a comment and also reply to your own or other peoples comments.
+
 </section>
 
-<section id="usage">
+<section id="implementation">
 
-## 🛠️ Usage
+## 🛠️ Implementation
 
+You can easily add a comments section to any part of your application by dropping the Livewire comments component into your Blade file. The comments section will automatically work with any model you specify.
 
+To implement this, follow these steps:
+
+### Insert the Livewire Component
+   
+Add the following code snippet to your Blade file where you want the comments section to appear:
+   
+```
+<livewire:comments :model="$article" />
+```
+
+- Replace `"$article"` with the model instance you want to associate with the comments. This could be any Eloquent model, such as `Article`, `Post`, `Product`, etc.
+- The model passed will be used to associate the comments with that specific instance.
+
+### Set Up Your Model
+
+Ensure your model is properly configured to work with the comments component.
+Here's an example using an `Article model:
+
+```
+<?php
+   
+namespace App\Models;
+   
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Comment;
+   
+class Article extends Model
+{
+   use HasFactory;
+   
+   public function comments()
+   {
+      return $this->morphMany(Comment::class, 'commentable');
+   }
+}
+```
+
+- In this example, the `Article` model is set up to have a polymorphic relationship with comments using the `morphMany` method.
+- The comments method defines the relationship, allowing the `Article` model to be associated with multiple comments.
 
 </section>
 
