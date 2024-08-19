@@ -34,23 +34,21 @@ class CommentItem extends Component
     public function edit()
     {
         $this->authorize('edit', $this->comment);
+
         $this->editForm->validate();
 
         $this->comment->update($this->editForm->only('body'));
 
         $this->dispatch('edited', $this->comment->id);
-
-
     }
 
     public function reply()
     {
-
         $this->authorize('reply', $this->comment);
+
         $this->replyForm->validate();
 
         $reply = $this->comment->children()->make($this->replyForm->only('body'));
-
         $reply->user()->associate(auth()->user());
 
         $reply->save();

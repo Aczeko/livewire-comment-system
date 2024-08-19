@@ -1,6 +1,6 @@
 <div>
     <h1>
-        Comments (implement)
+        Comments ({{ $this->commentsCount() }})
     </h1>
 
     @auth

@@ -2,6 +2,7 @@
 namespace App\Livewire;
 use App\Livewire\Forms\CreateComment;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 class Comments extends Component
 {
@@ -20,6 +21,12 @@ class Comments extends Component
             ->toArray();
     }
 
+    #[Computed()]
+    public function commentsCount()
+    {
+        return array_sum(array_map('count', $this->chunks));
+    }
+
     public function createComment()
     {
         $this->form->validate();
@@ -29,6 +36,8 @@ class Comments extends Component
         $this->form->reset();
 
         $comment->save();
+
+        array_unshift($this->chunks[0], $comment->id);
     }
 
     public function loadMore()
