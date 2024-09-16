@@ -11,17 +11,19 @@ class CommentChunk extends Component
 
     public function render()
     {
-        return view('livewire.comment-chunk', [
-            'comments' => Comment::query()
-                ->whereIn('id', $this->ids)
-                ->with([
+        $orderedComments = collect($this->ids)
+            ->map(function ($id) {
+                return Comment::with([
                     'user',
                     'children' => function ($query) {
                         $query->oldest()->with('user');
                     }
-                ])
-                ->orderByRaw('FIELD(id, ' . implode(',', $this->ids) . ')')
-                ->get()
+                ])->find($id);
+            })
+            ->filter();
+
+        return view('livewire.comment-chunk', [
+            'comments' => $orderedComments
         ]);
     }
 }
